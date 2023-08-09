@@ -32,13 +32,13 @@
      
      * 스택의 top에 있는 item을 반환 peek
 
-3.  스택의 push 알고리즘
+3. 스택의 push 알고리즘
    
    * (주의) append 메소드는 내부적으로 리스트 한자리 더 큰거 만들고 복사한 다음에 요소 추가하기 때문에 내부연산 느림
    
    ```python
    def push(item) : 
-       s.append(item)
+      s.append(item)
    ```
 
 ```python
@@ -162,6 +162,36 @@ stack_Frame(main)
 
 <img title="" src="./imgsrc/factorial.png" alt="">
 
+```python
+def fibo(n):
+    if n < 2:
+        return n
+    else:
+        return fibo(n-1) + fibo(n-2)
+```
 
+## Memoization
+
+- 재귀함수로 구현한 알고리즘은 중복 호출이 존재
+
+- 이전에 계산한 값을 저장해서 매번 다시 계산하지 않도록 하여 전체적인 실행속도 개선, 동적 계획법의 핵심
+
+- 실행시간을 O(n^2)에서 O(n)으로 줄일 수 있음
+
+```python
+# memo를 위한 배열을 할당하고, 모두 0으로 초기화한다.
+# memo[0]을 0으로 memo[1]은 1로 초기화 한다.
+
+def fibo(n):
+    global memo
+    if n >= 2 and memo[n] == 0:
+        memo[n] = (fino1(n-1) + fibo(n-2))
+    return memo[n]
+
+
+memo = [0] * (n+1)
+memo[0] = 0
+memo[1] = 1
+```
 
 
