@@ -299,3 +299,47 @@ DFS(v)
     }
 end DFS()
 ```
+
+
+
+```python
+'''
+7 8
+1 2 1 3 2 4 2 5 4 6 5 6 6 7 3 7
+'''
+V, E = map(int, input().split())
+arr = list(map(int, input().split()))
+adj_m = [[0]*(V+1) for _ in range(V+1)]
+for i in range(E):
+    v1, v2 = arr[i*2], arr[i*2+1]
+    adj_m[v1][v2] = 1
+    adj_m[v2][v1] = 1
+```
+
+<img title="" src="./imgsrc/adj_m.png" alt="">
+
+```python
+def dfs(n, V, adj_m):
+    stack = []
+    visited = [0] * (V + 1)
+    visited[n] = 1          # 시작점 방문 표시
+    print(n)                # do[n]
+    while True:
+        for w in range(1, V+1):   # 현재 정점 n에 인접하고 미방문 w찾기
+            if adj_m[n][w] == 1 and visited[w] == 0:
+                stack.append(n) # push(v), v = w
+                n = w
+                print(n)       # do(w)
+                visited[n] = 1 # w 방문 표시
+                break # for w, n에 인접인 w 찾은 경우
+        else: #방문할 곳이 더이상 없다면 뒷걸음질
+            # 스택에 지나온 정점이 남아있으면
+            if stack:
+                n = stack.pop() # pop()해서 다시 다른 w 찾을 갈림길 n준비
+            else:
+                # 스택이 비어 있으면 뒷걸음질쳐서 다른 갈림길 찾을 수 없음
+                break   # while True 탐색 끝
+    return
+
+dfs(1, V, adj_m)
+```
