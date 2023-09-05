@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      height: 500px; 
+      border: 1px solid black;
+      /* 1. 기본값 메인축은 좌에서 우*/
+      display: flex;
+      /* 2. 메인축 row방향으로 설정 */
+      /* flex-direction: row; */
+      /* 3. 메인축 90도 돌리기 */
+      /* flex-direction: column; */
+      /* 4. 메인축 뒤집기 */
+      /* flex-direction: row-reverse; */
+      /* flex-direction: column-reverse; */
+
+      /* 5. flex item 목록이 flex container 하나의 행에 들어가지 않을 경우 */
+      /* 다른 행에 배치할지 여부 설정, 기본값 nowrap */
+      flex-wrap: wrap;
+
+      /* 6. justify-content : 주 축을 따라 flex item과 주위에 공간을 분배 */
+      /* align-content: flex-start; */
+      align-content: center;
+      /* align-content: flex-end; */
+
+
+    }
+
+    .post {
+      background-color: grey;
+      border: 1px solid black;
+      margin: 0.5rem;
+      padding: 0.5rem;
+    }
+
+    .item1 {}
+
+    .item2 {}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="post item1">
+      <h2>Post Title 1</h2>
+      <p>Post Content 1</p>
+    </div>
+    <div class="post item2">
+      <h2>Post Title 2</h2>
+      <p>Post Content 2</p>
+    </div>
+    <div class="post">
+      <h2>Post Title 3</h2>
+      <p>Post Content 3</p>
+    </div>
+    <div class="post">
+      <h2>Post Title 4</h2>
+      <p>Post Content 4</p>
+    </div>
+  </div>
+
+</body>
+
+</html>

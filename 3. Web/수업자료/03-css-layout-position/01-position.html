@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CSS Position</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 1500px;
+    }
+
+    .container {
+      position: relative;
+      height: 300px;
+      width: 300px;
+      border: 1px solid black;
+    }
+
+    .box {
+      height: 100px;
+      width: 100px;
+      border: 1px solid black;
+    }
+
+    .static {
+      position: static; /* 1. 기본값 */
+      background-color: lightcoral;
+    }
+
+    .absolute {
+      /* 부모인 container를 찾음 -> container는 static이 아님 -> body로 올라감 */
+      position: absolute; /* 3. 절대 위치 (기준 : static이 아닌 부모를 찾아 올라감) */
+      background-color: lightgreen;
+      top: 100px; 
+      left: 100px;
+    }
+
+    .relative {
+      position: relative; /* 2. 상대 위치 (본인의 static 위치를 기준으로 )*/
+      background-color: lightblue;
+      top: 100px; 
+      left: 100px;
+    }
+
+    .fixed {
+      position: fixed;
+      background-color: gray;
+      top: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box static">Static</div>
+    <div class="box absolute">Absolute</div>
+    <div class="box relative">Relative</div>
+    <div class="box fixed">Fixed</div>
+  </div>
+</body>
+
+</html>

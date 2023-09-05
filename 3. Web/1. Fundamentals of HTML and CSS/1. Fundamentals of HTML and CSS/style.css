@@ -1,0 +1,40 @@
+/* p {
+    font-style: italic;
+} */
+
+.bg{
+    background-color: blue;
+    color: white;
+}
+
+.accent{
+    /* border : 1px solid black;
+    padding : 5px; */
+    color : red;
+    font-weight: bold;
+
+}
+
+.small{
+    font-size: 0.5em;
+    vertical-align:0.5em;
+    /* margin: */
+
+}
+
+h1{
+    display: inline-block; /* 전체말고 그 부분만 배경색 넣기 */
+    font-size: 1.4em; /* 1em = 16px */
+    background-color: orange;
+}
+
+li{
+    font-size: 1em;
+    
+}
+
+#container{
+    /* padding : 30px 250px  */
+    width : 600px;
+    margin : 20px auto; /* 가운데 정렬*/
+}
