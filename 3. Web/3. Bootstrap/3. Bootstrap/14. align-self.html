@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            /* 플렉스 컨테이너 지정 */
+            display: flex;
+            width: 100%;
+            height: 150px;
+            background-color: pink;
+            border: 1px solid black;
+            margin-bottom: 30px;
+            height: 200px;
+            /* 교차축 중앙에 배치 */
+            align-items: center;
+        }
+
+        .box{
+            /* 수직 수평 */
+            padding: 5px 45px;
+            margin: 5px;
+            width: 80px;
+            background-color: purple;
+        }
+
+        #opt1{
+            /* 나 하나만 다르게 정렬 시작점에 배치 */
+            align-self: flex-start;
+        }
+        #opt2{
+            align-self: stretch;
+        }
+        #opt3{
+            /* 나 하나만 다르게 정렬 끝점에 배치 */
+            align-self: flex-end;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box" id="opt1">1</div>
+        <div class="box"id="opt2">2</div>
+        <div class="box" id="opt3">3</div>
+        <div class="box">4</div>
+
+    </div>
+</body>
+</html>
