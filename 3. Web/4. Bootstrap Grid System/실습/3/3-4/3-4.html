@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <style>
+    *{
+      font-family: Helvetica, 		   
+		'맑은 고딕', 'malgun gothic', 		   
+		'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo',  		   
+		'Microsoft NeoGothic',  		   
+		'Droid sans', sans-serif; 
+    }
+  
+  nav{
+    background-color: rgb(54, 58, 63);
+  }
+
+  .bgimage{
+    height: 800px;
+    background-image: url("images/header.jpg");
+    background-size: cover;
+  }
+
+  .main{
+    height:700px;
+  }
+
+  .imgwidth{
+    width: 200px;
+  }
+  </style>
+  </head>
+  <body>
+    
+
+    <div class="container d-flex flex-column min-vh-100">
+      <div class="row">
+        <!-- 네비게이션 -->
+        <nav class="col-12 sticky-top d-flex justify-content-between">
+          <div>
+            <a class="navbar-brand" href="#">
+              <img src="./images/logo.png" alt="Bootstrap" width="115" height="45">
+            </a>
+          </div>
+          <div class="d-flex justify-content-between mt-2 px-1 text-white">
+            <p class="menu mx-2">Home</p>
+            <p class="menu mx-2">Community</p>
+            <p class="menu mx-2">Login</p>
+          </div>
+        </nav>
+        <!-- header -->
+        <header class="col-12 bgimage d-flex justify-content-center align-items-center">
+            <div class="d-flex flex-column align-items-center">
+              <p class="text-center display-2 text-white"><b>Cinema<br>Community</b></p>
+              <button type="button" class="btn btn-primary btn-lg">Let's Go</button>
+            </div>
+        </header>
+        <!-- main -->
+        <main class="col-12 main bgwhite d-flex justify-content-center align-items-center">
+            <div class="col-12 d-flex flex-column align-items-center">
+              
+              <p class="my-5 text-center display-4">Used Skills</p>
+                     
+              <div class="d-flex justify-content-between">
+                <div class="pb-5 mx-3 position-relative">
+                  <img src="images/web.png" alt="" style="max-width: 100%;>
+                    <p class="position-absolute bottom-0 start-50 translate-middle-x">Web</p>
+                </div>
+                <div class="pb-5 mx-3 position-relative">
+                  <img src="images/html5.png" alt="" style="max-width: 100%;>
+                    <p class="position-absolute bottom-0 start-50 translate-middle-x">HTML</p>
+                </div>
+                <div class="pb-5 mx-3 position-relative">
+                  <img src="images/css3.png" alt="" style="max-width: 100%;>
+                    <p class="position-absolute bottom-0 start-50 translate-middle-x">CSS</p>
+                </div>
+              </div>
+            </div>
+        </main>
+        <!-- footer -->
+        <!-- <footer class="col-12 pt-0 mt-auto">
+          <div class="py-3 d-flex justify-content-center align-items-center bg-primary">
+            <p class="my-auto mx-auto text-white">HTML&CSS project. Created by SeunghuiKim</p>
+          </div>
+        </footer> -->
+
+        <footer class= "sticky-bottom mt-auto py-3 bg-primary text-white text-center w-100">
+          <div class='container'>
+            <p class="mt-auto mx-auto mb-0">HTML&CSS project. Created by SeunghuiKim</p>      
+          </div>	
+        </footer>
+      
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  </body>
+</html>
