@@ -26,13 +26,15 @@
 
 [8.수식 트리](#수식-트리)
 
-[9.이진 탐색 트리](#이진-탐색-트리)
+9.트리의 표현
 
-[10. 힙](#힙heap)
+[10.이진 탐색 트리](#이진-탐색-트리)
 
-- [10-1 힙 연산 - 삭제](#힙-연산---삭제)
+[11. 힙](#힙heap)
 
-[11. 힙을 이용한 우선순위 큐](#힙을-이용한-우선순위-큐)
+- [11-1 힙 연산 - 삭제](#힙-연산---삭제)
+
+[12. 힙을 이용한 우선순위 큐](#힙을-이용한-우선순위-큐)
 
 ## 트리의 개념
 
@@ -129,6 +131,17 @@
   - 오른쪽 편향 이진 트리
 
 <img title="" src="./imgsrc/skewedbinarytree.png" alt="">
+
+3. 완전 이진 트리(Complete Binary Tree)
+- 높이가 h이고 노드 수가 n개 일 때(단, 2^h <= n < s^(h+1) - 1)
+
+- 포화 이진 트리의 노드 번호 1번부터 n번까지 빈 자리가 없는 이진 트리
+  
+  - 마지막 레벨을 제외한 모든 레벨은 꽉 차있어야 한다.
+  
+  - 마지막 레벨 노드는 왼쪽부터 채워져야 한다
+
+<img title="" src="./imgsrc/complete binary tree.png" alt="">
 
 ## 순회(traversal)
 
@@ -390,6 +403,123 @@ for tc in range(1, T + 1):
 
 - 전위 순회 : + * * / A B C D E
 
+### 트리의 표현
+
+- 연결리스트 - 개발용
+  
+  - 이진 트리의 모든 노드는 최대 2개의 자식 노드를 가지므로 일정한 구조의 단순 연결 리스트 노드를 사용하여 구현
+  
+  <img title="" src="./imgsrc/linked list.png" alt="">
+  
+  ```python
+  # 1. 연결 리스트로 저장 : 개발용
+  class TreeNode:
+      def __init__(self, value):
+          self.value = value
+          self.left = None
+          self.right = None
+  
+      # 삽입 함수
+      def insert(self, childNode):
+          # 왼쪽 자신이 없을 경우
+          if not self.left:
+              self.left = childNode
+              return
+          
+          # 오른쪽 자식이 없을 경우
+          if not self.right:
+              self.right = childNode
+              return
+          
+          return
+      
+      # 순회
+      def preorder(self):
+          # 아무 것도 없는 트리를 조회할 때
+          if self != None:
+              print(self.value, end = " ")
+              # 왼쪽이 있다면 왼쪽 자식 조회
+              if self.left:
+                  self.left.preorder()
+              # 오른쪽이 있다면 오른쪽 자식 조회
+              if self.right:
+                  self.right.preorder()
+  
+      def inorder(self):
+          # 아무 것도 없는 트리를 조회할 때
+          if self != None:
+              
+              # 왼쪽이 있다면 왼쪽 자식 조회
+              if self.left:
+                  self.left.inorder()
+  
+              print(self.value, end = " ")
+  
+              # 오른쪽이 있다면 오른쪽 자식 조회
+              if self.right:
+                  self.right.inorder()     
+  
+      def postorder(self):
+          # 아무 것도 없는 트리를 조회할 때
+          if self != None:
+              
+              # 왼쪽이 있다면 왼쪽 자식 조회
+              if self.left:
+                  self.left.postorder()
+  
+              # 오른쪽이 있다면 오른쪽 자식 조회
+              if self.right:
+                  self.right.postorder()          
+  
+              print(self.value, end = " ")
+  
+  arr = [1, 2, 1, 3, 2, 4, 3, 5, 3, 6]
+  # 이진 트리 만들기
+  nodes =  [TreeNode(i) for i in range(0, 14)]
+  for i in range(0, len(arr), 2):
+      parentNode = arr[i]
+      childNode = arr[i + 1]
+      nodes[parentNode].insert(nodes[childNode])
+  
+  nodes[1].preorder()
+  print()
+  nodes[1].inorder()
+  print()
+  nodes[1].postorder()
+  ```
+
+- 인접리스트
+
+```python
+arr = [1, 2, 1, 3, 2, 4, 3, 5, 3, 6]
+# 이진 트리 만들기
+nodes =  [[] for _ in range(0, 14)]
+for i in range(0, len(arr), 2):
+    parentNode = arr[i]
+    childNode = arr[i + 1]
+    nodes[parentNode].append(childNode)
+    # 자식을 먼저 조회하고 나중에 부모를 조회하는 경우는 거의 없음
+    # nodes[childNode].append(parentNode)
+
+for i in range(len(nodes)):
+    print(nodes[i])
+
+# 자식이 더 이상 없다는 걸 표한하기 위해 None 삽입
+for li in nodes:
+    for _ in range(len(li), 2):
+        li.append(None)
+
+def preorder(nodeNum):
+    if nodeNum == None:
+        return
+    
+    print(nodeNum, end = " ")
+    preorder(nodes[nodeNum][0])
+    preorder(nodes[nodeNum][1])
+
+preorder(1)
+```
+
 ### 이진 탐색 트리
 
 - 탐색작업을 효율적으로 하기 위한 자료구조
@@ -417,6 +547,10 @@ for tc in range(1, T + 1):
     - (키 값 x > 루트노드의 키 값) : 루트노드의 오른쪽 서브트리에 대해서 탐색연산 수행
   
   - 서브트리에 대해서 순환적으로 탐색 연산을 반복한다.
+  
+  - 탐색 수행할 서브 트리가 없으면 탐색 실패
+  
+  <img title="" src="./imgsrc/search.png" alt="">
 
 - 삽입 연산
   
@@ -427,6 +561,8 @@ for tc in range(1, T + 1):
      - 탐색에서 탐색 실패가 결정되는 위치가 삽입 위치가 됨
   
   2. 탐색 실패한 위치에 원소를 삽입
+  
+  <img title="" src="./imgsrc/insert.png" alt="">
 
 - 삭제 연산
   
@@ -439,6 +575,12 @@ for tc in range(1, T + 1):
     - 9 - 왼쪽 트리에서 가장 큰 값을 위로 땡겨옴
   
   <img title="" src="./imgsrc/deletion.png" alt="">
+  
+  <img title="" src="./imgsrc/deletion-1.png" alt="">
+  
+  1. 왼쪽 서브트리의 가장 오른쪽 자식 노드
+  
+  2. 오른쪽 서브트리의 가장 왼쪽 노드
 
 #### 이진 탐색 트리의 성능
 
@@ -466,7 +608,7 @@ for tc in range(1, T + 1):
   
   - 정렬된 배열에서의 순차 검색 : O(N)
   
-  - 정렬된 배열에서의 이진탐색 : O(log N)
+  - 정렬된 배열에서의 이진탐색 : O(log N) 
     
     - 고정 배열 크기와 삽입, 삭제 시 추가 연산 필요
   
@@ -535,6 +677,10 @@ for tc in range(1, T + 1):
           p <- c // 2
       ```
 
+#### 힙 연산 - 삽입
+
+<img title="" src="./imgsrc/heap insert.png" alt="">
+
 #### 힙 연산 - 삭제
 
 - 힙에서는 루트 노드의 원소만을 삭제할 수 있다.
@@ -554,6 +700,8 @@ last -= 1
 # 3. 최대힙 유지 (부모 > 자식)
 # 4. 자식이 없거나 부모가 크면 비교 중지
 ```
+
+### <img title="" src="./imgsrc/heap deletion.png" alt="">
 
 ### 힙을 이용한 우선순위 큐
 
@@ -578,9 +726,45 @@ def deq():
             c = p * 2  # 왼쪽 자식 번호를 계산
         else:  # 부모가 더 크면
             break  # 비교 중단
-    
+
     return tmp
 
 heap = [0] * 100
 last = 0
 ```
+
+- 힙을 활용하는 대표적인 2가지 예는 <mark>특별한 큐의 구현</mark>과 <mark>정렬</mark>이다.
+
+- 우선순위 큐를 구현하는 가장 효율적인 방법이 힙을 사용하는 것이다
+  
+  - 노드 하나나의 추가/삭제가 시간복잡도가 O(logN)이고 최대값/최소값을 O(1)에 구할 수 있다.
+  
+  - 완전 정렬보다 관리 비용이 적다.
+
+- 배열을 통해 트리 형태를 쉽게 구현할 수 있다.
+  
+  - 부모나 자식 노드를 O(1)  연산으로 쉽게 찾을 수 있다.
+  
+  - n 위치에 있는 노드의 자식은 2n과 2n+1 위치 한다.
+  
+  - 완전 이진 트리의 특성에 의해 추가/삭제의 위치는 자료의 시작과 끝 인덱스로 쉽게 판단할 수 있다.
+
+- 힙 정렬
+  
+  - 힙 정렬은 힙 자료구조를 이용해서 이진 탐색과 유사한 방법으로 수행된다.
+  
+  - 정렬을 위한 2단계
+    
+    1. 하나의 값을 힙에 삽입한다.(반복)
+    
+    2. 힙에서 순차적(오름차순)으로 값을 하나씩 제거한다.
+  
+  - 힙 정렬의 시간 복잡도
+    
+    - N개의 노드 삽입 연산 + N개의 노드 삭제 연산
+    
+    - 삽입과 삭제 연산은 각각 O(logN)이다
+    
+    - 따라서 , 전체 정렬은 O(NlogN)이다.
+
+- 힙 정렬은 배열에 저장된 자료를 정렬하기에 유용하다
