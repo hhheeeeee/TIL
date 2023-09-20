@@ -300,8 +300,6 @@ DFS(v)
 end DFS()
 ```
 
-
-
 ```python
 '''
 7 8
