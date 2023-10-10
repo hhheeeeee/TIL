@@ -21,6 +21,7 @@
 - 목표 : 일상 생활의 객체를 DB에 표현하고 저장
 
 - 개체(Entity), 스키마(Schema), 테이블(Table)
+  
   - 개체(Entity)
     - 저장하고자 하는 실제 객체나 개념을 정리한 것
     - 각 엔티티는 여러 속성(Attributes)으로 구성된다
@@ -44,22 +45,18 @@
       - 열(Column), 속성(Attribute), 필드(Field)
     - 세로 줄
       - 어떤 데이터를 저장할 것인지 나타냄
+
 - 속성(Attribute)
+  
   - 엔티티가 가지는 항목으로, 저장하고 싶은 개체의 특정 항목을 의미함
+
 - 관계(Relationship)
+  
   - 두 가지 이상의 엔티티 사이의 관계
   - 예시) 추가적으로 서울 4반의 강사 정보를 관리하고 싶다.
   - 강사 정보를 따로 저장해야 한다.
   - 다 같이 저장하면, 중복이 매우 많이 발생한다!
   - "서울 4반 학생" - "강사"는 연관된 데이터. 관계가 있다라고 말한다.
-
-
-
-
-
-
-
-
 
 # 실습
 
@@ -106,7 +103,6 @@ RENAME TO superhero;
 --새로운 컬럼 추가
 ALTER TABLE superhero
 ADD COLUMN 가입날짜 DATE;
-
 ```
 
 5. 터미널에서 실행
@@ -117,4 +113,7 @@ sqlite> .import superheroes.csv superhero
 ```
 
 - csv 데이터가 sqlite로 쭉 들어간다
-6. 
+
+```sql
+
+```
