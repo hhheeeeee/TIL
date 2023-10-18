@@ -1,40 +1,38 @@
 # Django REST framework 1
 
-1. REST API
+[1. REST API](#1-rest-api)
    
-   - 1-1 REST API
+   - [1-1 REST API](#1-1-rest-api)
    
-   - 1-2 자원의 식별
+   - [1-2 자원의 식별](#1-2-자원의-식별)
      
-     - 1-2-1 URL 구조
+     - [1-2-1 URL 구조](#1-2-1-url-구조)
    
-   - 1-3 자원의 행위
+   - [1-3 자원의 행위](#1-3-자원의-행위)
    
-   - 1-4 자원의 표현
+   - [1-4 자원의 표현](#1-4-자원의-표현)
 
-2. DRF
+[2. DRF](#2-drf)
    
-   - 2-1 Serialization
+   - [2-1 Serialization](#2-1-serialization)
 
-3. DRF with Single Model
+[3. DRF with Single Model](#3-drf-with-single-model)
    
-   - 3-1 GET
+   - [3-1 GET](#3-1-get)
      
-     - GET - List
+     - [GET - List](#get---list)
      
-     - GET - Detail
+     - [GET - Detail](#get---detail)
    
-   - 3-2 POST
+   - [3-2 POST](#3-2-post)
    
-   - 3-3 Delete
+   - [3-3 Delete](#3-3-delete)
    
-   - 3-4 PUT
+   - [3-4 PUT](#3-4-put)
    
-   - 3-5 최종
-
 4. 참고
    
-   - raise_exception
+   - [raise_exception](#raise_exception)
 
 ---
 
