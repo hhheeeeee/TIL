@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='row'>
+  <h1 class='col-8'>{{ person.username }}님의 프로필 페이지</h1>
+  <div class='col-4 d-flex justify-content-end'>
+    <p>팔로잉 : {{ person.followings.all|length }} / 팔로워 : {{ person.followers.all|length }}</p>
+    {% if request.user.is_authenticated %}
+      {% if request.user != person %}
+          <form action="{% url "accounts:follow" person.pk %}" method="POST">
+            {% csrf_token %}
+            {% if request.user in person.followers.all %}
+              <input class="btn btn-light"type="submit" value="Unfollow">
+            {% else %}
+              <input class="btn btn-light" type="submit" value="Follow">
+            {% endif %}
+          </form>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+
+
+<div>
+  <p>회원번호 : {{ person.pk }}</p>
+  <p>유저이름: {{ person.username }}</p>
+  <p>가입날짜 : {{ person.date_joined }}</p>
+</div>
+
+
+<hr>
+
+<div>
+  <h2>유저가 쓴 글</h2>
+  {% for board in person.board_set.all %}
+    <div class="bg-light">
+      <p>글번호 : {{ board.id }}</p>
+      <p>글제목 : <a href="{% url 'boards:detail' board.id %}" style="text-decoration: none;">{{ board.title }}</a></p>
+    </div>
+  {% endfor %}
+</div>
+
+<hr>
+
+<div>
+  <h2>유저가 쓴 댓글</h2>
+  {% if person.comment_set.all|length == 0 %} 아직 작성한 댓글이 없습니다.
+  {% else %}
+    {% for comment in person.comment_set.all %}
+        {{ comment.content }}
+    {% endfor %}
+  {% endif %}
+</div>
+
+<hr>
+
+<div>
+  <h2>팔로워</h2>
+  {% if person.followers.all|length == 0 %} 팔로워한 사람이 없습니다.
+  {% else %}
+    {% for person in person.followers.all %}
+      <p>{{ person.username }}</p>
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% comment %}
+
+<h2>좋아요를 누른 게시글</h2>
+{% for board in person.like_articles.all %}
+  <p>{{ article.title }}</p>
+{% endfor %}
+
+{% endcomment %}
+
+
+
+{% endblock content %}
+
+
