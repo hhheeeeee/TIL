@@ -1,35 +1,34 @@
 # Django REST framework 1
 
 [1. REST API](#1-rest-api)
-   
-   - [1-1 REST API](#1-1-rest-api)
-   
-   - [1-2 자원의 식별](#1-2-자원의-식별)
-     
-     - [1-2-1 URL 구조](#1-2-1-url-구조)
-   
-   - [1-3 자원의 행위](#1-3-자원의-행위)
-   
-   - [1-4 자원의 표현](#1-4-자원의-표현)
+
+- [1-1 REST API](#1-1-rest-api)
+
+- [1-2 자원의 식별](#1-2-자원의-식별)
+  
+  - [1-2-1 URL 구조](#1-2-1-url-구조)
+
+- [1-3 자원의 행위](#1-3-자원의-행위)
+
+- [1-4 자원의 표현](#1-4-자원의-표현)
 
 [2. DRF](#2-drf)
-   
-   - [2-1 Serialization](#2-1-serialization)
+
+- [2-1 Serialization](#2-1-serialization)
 
 [3. DRF with Single Model](#3-drf-with-single-model)
-   
-   - [3-1 GET](#3-1-get)
-     
-     - [GET - List](#get---list)
-     
-     - [GET - Detail](#get---detail)
-   
-   - [3-2 POST](#3-2-post)
-   
-   - [3-3 Delete](#3-3-delete)
-   
-   - [3-4 PUT](#3-4-put)
-   
+
+- [3-1 GET](#3-1-get)
+  
+  - [GET - List](#get---list)
+  
+  - [GET - Detail](#get---detail)
+
+- [3-2 POST](#3-2-post)
+
+- [3-3 Delete](#3-3-delete)
+
+- [3-4 PUT](#3-4-put)
 4. 참고
    
    - [raise_exception](#raise_exception)
@@ -248,34 +247,31 @@
   ```
   
   - http://127.0.0.1:8000/api/v1/articles/ 요청테스트
-  - python으로 json 응답받기
-  
-  ```python
-  import requests
-  from pprint import pprint
-  
-  
-  response = requests.get('http://127.0.0.1:8000/api/v1/articles/')
-  
-  # json을 python 타입으로 변환
-  result = response.json()
-  
-  print(type(result))
-  # pprint(result)
-  # pprint(result[0])
-  # pprint(result[0].get('title'))
-  ```
-  
-  ```bash
-  $ python python-request-sample.py
-  <class 'list'>
-  ```
+
+```python
+import requests
+from pprint import pprint
+
+response = requests.get('http://127.0.0.1:8000/api/v1/articles/')
+# json을 python 타입으로 변환
+result = response.json()
+print(type(result))
+
+# pprint(result)
+
+# pprint(result[0])
+
+# pprint(result[0].get('title'))
+```
+
+```bash
+$ python python-request-sample.py
+<class 'list'>
+```
 
 - 왜 `<class 'list'>` 인가??
   
   - json이 하나의 큰 list에 담겨잇음!
-
-
 
 # 2. DRF
 
@@ -294,8 +290,6 @@
 - 예시
 
 <img title="" src="./img/serialization.png" alt="">
-
- 
 
 # 3. DRF with Single Model
 
@@ -419,8 +413,6 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = '__all__'
-
-
 ```
 
 - url 및 view 함수 작성
@@ -436,7 +428,6 @@ urlpatterns = [
     path("articles/", views.article_list),
     path("articles/<int:article_pk>", views.article_detail),
 ]
-
 ```
 
 ```python
@@ -461,8 +452,6 @@ def article_detail(request, article_pk):
 
 <img title="" src="./img/get_detail postman.png" alt="">
 
-
-
 ### 3-2 POST
 
 - 게시글 데이터 생성하기
@@ -472,8 +461,6 @@ def article_detail(request, article_pk):
 - 데이터 생성이 실패했을 경우 `400 Bad request`를 응답
 
 - 원래 200은 그냥 성공인데 201은 생성 성공! - 더 자세함
-
-
 
 - article_list view 함수 구조 변경(method에 따른 분기 처리)
 
@@ -494,14 +481,13 @@ def article_list(request):
         serializer = ArticleListSerializer(articles, many=True)
         # serializer 자체는 객체라서 .data로 해서 보내줘야댐
         return Response(serializer.data)
-    
+
     elif request.method == 'POST':
         serializer = ArticleSerializer(data=request.data)
         if serializer.is_valid(): # 참고 :form 에서 쓴거랑 다른거임! 이름만 똑같은거임!
             serializer.save() # 얘도 이름만 똑같은거
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 ```
 
 - POST http://127.0.0.1:8000/api/v1/articles 응답 확인
@@ -513,8 +499,6 @@ def article_list(request):
   - GET http://127.0.0.1:8000/api/v1/articles/22
 
 <img title="" src="./img/post 확인.png" alt="">
-
-
 
 > rest는 url을 식별(위치)하는 용도로만 쓴다.
 > 
@@ -536,13 +520,13 @@ def article_list(request):
 @api_view(['GET', 'DELETE'])
 def article_detail(request, article_pk):
     article = Article.objects.get(pk=article_pk)
-    
+
     if request.method == 'GET':
         # many=False가 기본값, 근데 단일데이터 아니라 다중데이터일 때는 many=True해줘야댐
         serializer = ArticleSerializer(article)
         # serializer 자체는 객체라서 .data로 해서 보내줘야댐
         return Response(serializer.data)
-    
+
     elif request.method == 'DELETE':
         article.delete()
                 # 성공임 당신의 요청으로 인해서 컨텐츠가 없어졌다
@@ -552,8 +536,6 @@ def article_detail(request, article_pk):
 - DELETE http://127.0.0.1:8000/api/v1/articles/21 응답 확인
 
 <img title="" src="./img/delete postman.png" alt="">
-
-
 
 ### 3-4 PUT
 
@@ -567,18 +549,18 @@ def article_detail(request, article_pk):
 @api_view(['GET', 'DELETE','PUT'])
 def article_detail(request, article_pk):
     article = Article.objects.get(pk=article_pk)
-    
+
     if request.method == 'GET':
         # many=False가 기본값, 근데 단일데이터 아니라 다중데이터일 때는 many=True해줘야댐
         serializer = ArticleSerializer(article)
         # serializer 자체는 객체라서 .data로 해서 보내줘야댐
         return Response(serializer.data)
-    
+
     elif request.method == 'DELETE':
         article.delete()
                 # 성공임 당신의 요청으로 인해서 컨텐츠가 없어졌다
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
     elif request.method == 'PUT':
         serializer = ArticleSerializer(article, data=request.data)
         if serializer.is_valid():
@@ -588,8 +570,6 @@ def article_detail(request, article_pk):
 ```
 
 - PUT  http://127.0.0.1:8000/api/v1/articles/21 응답 확인
-  
-  
 
 # 4. 참고
 
@@ -602,5 +582,3 @@ https://www.django-rest-framework.org/
 - DRF 에서 제공하는 기본 예외 처리기에 의해 자동으로 처리되며 기본적으로 `HTTP 400` 응답을 반환
 
 <img title="" src="./img/raise_exception.png" alt="">
-
-
