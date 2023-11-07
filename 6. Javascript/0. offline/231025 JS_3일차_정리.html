@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. 함수
+        // 자바스크립트에서는 두 가지 방식으로 선언이 가능함
+        // 1.1. 함수 선언식
+        // 이때까지 쓴 방식과 비슷한 방식
+        function func(param1, param2) {
+            console.log(`함수 선언식 = ${param1}, ${param2}`)
+        }
+        
+        func(1, 2)
+
+        // 1.2. 함수 표현식
+        // 함수의 이름은 일반적으로 잘 안쓴다! (익명 함수로)
+        // 반드시 이름을 필요한 경우 ?
+        // 재귀 호출 때는 이름이 필요하다!
+        const myfunc = function (param1, param2) {
+            console.log(`함수 표현식 = ${param1}, ${param2}`)
+        }
+
+        myfunc(3, 4)
+
+        // 두 방식의 차이점 - 호이스팅 여부
+        // 호이스팅이란 ?
+        //   - 번역하면 끌어올린다
+        //   - 변수와 함수 선언이
+        //      코드 상단으로 옮겨지는 것처럼 보이는 현상
+
+        // 아래 코드가 버그가 나지 않는 이유는
+        // var 가 호이스팅이 발생하기 때문이다!
+        // console.log(x)
+        // var x = 5
+        // console.log(x)
+
+        // 자바스크립트 해석기는 아래와 같이 해석함
+        // var x
+        // console.log(x)
+        // x = 5
+        // console.log(x)
+
+        // 함수 선언식은 호이스팅이 발생한다.
+        hoistedFunction()
+        function hoistedFunction() {
+            console.log("선언식은 호이스팅 됨!")
+        }
+
+        // 함수 표현식은 발생하지 않는다.
+        // var, let, const 다 안된다!
+        // testFunc()
+        // var testFunc = function notHoistedFunction() {
+        //     console.log("호이스팅 발생 안함!")
+        // }
+
+        // 1.3. 매개변수의 기본값 설정
+        const myfunc2 = function (param1=10, param2=20) {
+            console.log(`${param1}, ${param2}`)
+        }
+
+        myfunc2()       // 10, 20
+        myfunc2(1)      // 1, 20
+        myfunc2(1, 2)   // 1, 2
+        myfunc2(1, 2, 3, 4)   // 1, 2
+
+        // 1.4. 모든 매개변수 활용하기
+        // arguments : 파라미터 전체를 가지는 내장 객체
+        const myfunc3 = function (param1=10, param2=20) {
+            // 자주 안쓴다!
+            // 이유1. 화살표 함수에서는 못씀
+            // 이유2. 가독성 안좋음
+            // 이유3. Array Helper Methods 못 씀
+            console.log(arguments)
+        }
+
+        myfunc3(1, 2, 3, 4)
+        
+        // 많이 쓰이는 방법
+        const myfunc4 = function (param1, param2, ...params) {
+            console.log(params)
+            // 인덱스 접근 가능
+            console.log(params[0])
+        }
+
+        myfunc4(1, 2, 3, 4)
+
+        // 1.5. 객체를 파라미터로 보내보자!
+        const obj = {
+            'name': '금기륜',
+            'job': '강사',
+            'condition': 'best',
+            // callMyName: function() {
+            //     console.log(`내 이름은 ${this.name}`)
+            // }
+            // 축약 버전 - 일반적으로 많이 쓰임
+            callMyName() {
+                console.log(`내 이름은 ${this.name}`)
+            }
+        }
+
+        const myfunc5 = function (obj) {
+            console.log(obj)
+            // 객체 속성 접근은 . 이나 [] 활용
+            console.log(obj.name)
+            console.log(obj['name'])
+            obj.callMyName()
+        }
+
+        myfunc5(obj)
+
+        // 1.6. 화살표 함수
+
+        // 일반 함수
+        const notArrowFunc = function() {
+            return 10
+        }
+
+        // 화살표 함수
+        // 일반적으로 많이 쓰는 방식
+        const arrowFunc = () => {
+            return 10
+        }
+
+        // 내부 표현식이 return 을 포함한 한 줄이네?
+        // return 과 중괄호를 생략 가능
+        // const arrowFunc = () => 10
+
+        // 파라미터가 없네 ?
+        // 언더바(_)로 사용 가능
+        // const arrowFunc = _ => 10
+
+        const result = arrowFunc()
+        console.log(`result = ${result}`)
+
+        // 1.7 this 알아보기
+        // this: 특정 Object 를 가리키는 키워드
+        // python 의 self 와 비슷함
+        //      -> self: 인스턴스 자기자신
+        // 자바스크립트는 호출 위치에 따라 this 가 가리키는
+        //      Object 가 바뀜
+        //      -> 호출 될 때 결정됨(동적 할당)
+
+        // 1.7.1. 냅다 써보기
+        console.log(this)   // 전역 객체 Window 가 출력
+        // 브라우저: Window / Node.js: global 객체가 this
+        // 그냥 쓰면 전역 객체를 가리킨다
+
+        // 1.7.2. 일반 함수에서 this
+        const normalFunc = function() {
+            console.log(this)   // this: 전역 객체(Window)
+        }
+        normalFunc()
+
+        // 1.7.3. 객체 내부 메서드에서의 this
+        const obj2 = {
+            'name': 'test',
+            myFunc: function() {
+                console.log(this)   // this: 메서드가 정의된 객체
+            }
+        }
+        obj2.myFunc()
+
+        // 1.7.4. 화살표 함수에서의 this
+        const arrowFunc2 = () => {
+            console.log(this)   // this: 전역 객체(Window)
+        }
+        arrowFunc2()
+
+        const obj3 = {
+            'name': 'test',
+            // 화살표 함수에서 this 는
+            // 정의한 곳 기준으로 한 단계 상위 스코프의 this 를 참조
+            // 이러한 것을 렉시컬 스코프(Lexical Scope)라고 함
+            myFunc: () => {
+                console.log(this)   // this: 전역 객체(Window)
+            }
+        }
+        obj3.myFunc()
+
+        // 1.7.5. 생성자 함수 내부에서 this
+        // 같은 내용의 객체를 여러 개 찍어내기 위해서는,
+        // 아래와 같이 생성자 함수를 만들어야 한다.
+        function Person(name) {
+            this.name = name
+            this.greeting = function() {
+                console.log(this)   // this: 생성된 인스턴스
+            }
+        }
+
+        const person1 = new Person("기륜")
+        const person2 = new Person("싸피")
+
+        person1.greeting()
+        person2.greeting()
+
+        // 1.7.6. 중첩된 함수에서의 this
+        // callback 함수 설명 후에 다시 돌아오자!
+        
+        const myObj = {
+            numbers: [1, 2, 3],
+            plusNumber: 3,
+            myFunc() {
+                console.log("this", this)   // myObj
+                // forEach 내부의 콜백 함수로 사용된 익명 함수는
+                // 밖으로 분리할 수 있다.
+                // == 일반 함수에서 this 참조와 동일함 == Window
+                // this.numbers.forEach(innerFunc)
+
+                // 콜백 함수는 화살표로 쓰자!
+                this.numbers.forEach((element) => {
+                    console.log(element + this.plusNumber)
+                })
+            }
+        }
+
+        myObj.myFunc()
+
+        
+        // 1.8. 함수 스코프와 블록 스코프의 차이
+        // 둘 모두 외부에서 접근 불가능한 범위를 나타냄
+
+        // 함수 스코프
+        // 함수 내부에서 사용하는 영역
+        // var, let, const 모두 외부에서는 사용 불가능
+        function abc() {
+            var varTmp = 12
+            let letTmp = 13
+            const constTmp = 14
+        }
+        // 함수 스코프 내부의 변수를 참조할 수 없어서 에러남
+        // console.log(varTmp)
+        
+        // 블록 스코프
+        if (true) {
+            var varTmp = 12
+            let letTmp = 13
+            const constTmp = 14
+        }
+        // var 는 된다!
+        console.log(varTmp)
+        // 즉, var 는 함수 스코프에서만 지역 변수로 인식
+        // 블록 스코프에서는 전역 변수처럼 인식
+        // console.log(letTmp) // 에러
+        // console.log(constTmp)   // 에러
+
+        // 2. 추가 객체 문법 파트 반드시 복습해야한다!
+
+        // 3. 콜백 함수(callback)
+        // - 다른 함수의 인자로 전달되는 함수
+        // 계산기
+        const calculator = function(a, b, mathFunction){
+            return mathFunction(a, b)
+        }
+
+        const add = function(a, b){
+            return a + b
+        }
+
+        const sub = function(a, b){
+            return a - b
+        }
+
+        // add, sub 를 콜백 함수라고 부름
+        console.log(calculator(3, 5, add))
+        console.log(calculator(3, 5, sub))
+
+        // 3.1. Array Helper Methods
+        // - 가독성이 높아짐
+        // - 내부적으로 for 문보다 빠르게 동작
+
+        // 많이 쓰이는 7가지 배열 함수
+        const numbers = [1, 2, 3, 4, 5]
+
+        // 3.1.1. forEach
+        // 원본 배열을 건들지 않고,
+        // 내부 요소들에 접근해서 사용하고 싶을 때
+        // element: 배열의 각 요소
+        // index: 배열 요소의 인덱스
+        // array: 원본 배열
+        numbers.forEach((element, index, array) => {
+            console.log(element, index, array)
+        })
+
+        // 3.1.2 map
+        // 원본 배열 기반으로 새로운 배열을 만들고 싶을 때 사용
+        const newNumbers = numbers.map((element) => {
+            return element + 5
+        })
+
+        console.log(numbers)    // 원본 배열은 그대로
+        console.log(newNumbers) // 5가 더해진 새로운 배열
+
+        // 3.1.3 filter
+        // 원본 배열에서 필요한 데이터만 골라서 새로운 배열로 생성
+        // 예시) 배열 중 짝수만 사용하고 싶다
+        const filterNumbers = numbers.filter((element) => {
+            // 조건이 true 인 요소만 반환
+            return element % 2 === 0
+        })
+        console.log(filterNumbers)
+
+        // 3.1.4 reduce
+        // 원본 배열 데이터를 활용해서 특정 하나의 값을 얻고 싶을 때
+        // 예시 ) 합계
+        // total: 누적값
+        // element: 배열의 각 요소
+        // index: 배열 요소의 인덱스
+        // array: 원본 배열
+        // initalValue: 초기값
+        let initialValue = 0
+        const sumValue = numbers.reduce((total, element, index, array) => {
+            return total + element
+        }, initialValue)
+        console.log(sumValue) // 15
+
+        // Quiz. 초기값을 10으로하여, numbers 배열 중 짝수만 더해라 -> 결과: 16
+        const r = numbers.reduce((total, element) => {
+            // if (element % 2 === 0) return total + element
+            // else return total
+            // 삼항 연산자 활용하기
+            return element % 2 === 0 ? total + element : total
+        }, 10)
+
+        console.log(r)
+
+        // 3.1.5. find
+        // 배열에서 특정 값을 찾아서 반환, 못찾으면 undefined 반환
+        let target = 3
+        const findNumber = numbers.find((element) => {
+            // 조건이 true 인 순간 검색 끝!
+            return element === target
+        })
+
+        console.log(findNumber) // 3
+
+        // 3.1.6. some
+        // 특정 조건이 하나라도 맞으면 true, 모두 틀리면 false (one of)
+        const someNumber = numbers.some((element) => {
+            // 2 보다 작은 게 하나라도 있으면 true
+            return element < 2
+        })
+        console.log(someNumber) // true
+
+        // 3.1.7. every
+        // 특정 조건이 모두 만족하면 true, 하나라도 틀리면 false (all of)
+        const everyFlag = numbers.every((element) => {
+            return element < 5
+        })
+        console.log(everyFlag)
+
+
+        const innerFunc = function(element) {
+            console.log(this)   // Window
+        }
+
+        
+        // 아래 두 개만 확실히 가져가자!
+        // object 에서는 화살표 함수를 쓰지말자!
+        const tmpObj = {
+            name: "test",
+            myFunc() {
+                console.log(this.name)
+            }
+        }
+
+        // 콜백 함수에서는 화살표 함수를 쓰자!
+        numbers.forEach((element) => {
+            console.log(element)
+        })
+
+        // 내일
+        // 유사배열객체
+        // 얕은 복사 & 깊은 복사
+        // 이벤트 쪽 실습
+        // 아래 두 개는 내일 상태보고 진행하던가, 정리본만 공유
+        // 브라우저의 렌더링 과정
+        // 자바스크립트 엔진의 실행 원리
+
+    </script>
+</body>
+</html>
